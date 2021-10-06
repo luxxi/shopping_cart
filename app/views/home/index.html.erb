@@ -2,6 +2,7 @@
   <div>
     <h3><%= product.name %></h3>
     <%= product.price %>
-    <%= button_to 'Add to Cart', '' %>
+    <%= button_to 'Add to Cart', shopping_cart_line_items_path, method: :post,
+          params: { product_id: product.id } %>
   </div>
 <% end %>
