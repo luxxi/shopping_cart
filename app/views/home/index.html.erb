@@ -1,0 +1,7 @@
+<% @products.each do |product| %>
+  <div>
+    <h3><%= product.name %></h3>
+    <%= product.price %>
+    <%= button_to 'Add to Cart', '' %>
+  </div>
+<% end %>
