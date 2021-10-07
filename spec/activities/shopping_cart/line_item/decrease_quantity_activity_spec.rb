@@ -17,6 +17,23 @@ RSpec.describe ShoppingCart::LineItem::DecreaseQuantityActivity do
       end
     end
 
+    context 'when line item quantity is 1' do
+      let(:line_item) { create(:line_item, cart: cart, quantity: 1) }
+
+      subject do
+        described_class.call(cart: cart, line_item: line_item)
+      end
+
+      it 'removes line item' do
+        expect(subject.cart.line_items.count).to eq(0)
+      end
+
+      it 'should remove line item' do
+        expect(ShoppingCart::RemoveLineItemActivity).to receive(:call)
+        subject
+      end
+    end
+
     context 'when arguments are not provided' do
       it 'raises ArgumentError exception' do
         expect { described_class.call }.to raise_error(ArgumentError)
