@@ -4,4 +4,6 @@
   <%= line_item.quantity %>
   <%= button_to '+', increase_shopping_cart_line_item_quantities_path(line_item),
         method: :post %>
+  <%= button_to '-', decrease_shopping_cart_line_item_quantities_path(line_item),
+        method: :post %>
 <% end %>
