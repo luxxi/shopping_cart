@@ -6,5 +6,12 @@ module ShoppingCart
         product_id: params[:product_id]
       )
     end
+
+    def destroy
+      @line_item = ShoppingCart::RemoveLineItemActivity.call(
+        cart: @current_cart,
+        line_item_id: params[:id]
+      )
+    end
   end
 end

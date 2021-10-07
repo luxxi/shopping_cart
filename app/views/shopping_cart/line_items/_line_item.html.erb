@@ -6,4 +6,6 @@
         method: :post %>
   <%= button_to '-', decrease_shopping_cart_line_item_quantities_path(line_item),
         method: :post %>
+  <%= button_to 'Remove', shopping_cart_line_item_path(line_item),
+        method: :delete %>
 <% end %>
