@@ -10,5 +10,9 @@ FactoryBot.define do
     trait :fixed_bulk_discount do
       association :offerable, factory: :offer_fixed_bulk_discounts, price: 450.0
     end
+
+    trait :variable_bulk_discount do
+      association :offerable, factory: :offer_variable_bulk_discounts
+    end
   end
 end
