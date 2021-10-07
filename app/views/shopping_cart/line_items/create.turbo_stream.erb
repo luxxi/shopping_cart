@@ -1,0 +1,4 @@
+<%= turbo_stream.append "line_items" do %>
+    <%= render partial: 'shopping_cart/line_items/line_item',
+          locals: { line_item: @line_item } %>
+  <% end %>

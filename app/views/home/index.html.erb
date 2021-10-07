@@ -6,3 +6,7 @@
           params: { product_id: product.id } %>
   </div>
 <% end %>
+
+<%= turbo_frame_tag 'line_items' do %>
+  <%= render partial: 'shopping_cart/line_items/line_item', collection: @line_items %>
+<% end %>
