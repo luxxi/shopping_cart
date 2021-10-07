@@ -14,12 +14,34 @@ module ShoppingCart
     end
   
     def call
-      Cart::LineItem.create(cart: cart, product: product, price: product.price)
+      return line_item if line_item.previously_new_record?
+      increase_quantity
     end
   
-    private  
+    private
+    def increase_quantity
+      ShoppingCart::LineItem::IncreaseQuantityActivity.call(
+        cart: cart,
+        line_item: line_item
+      )
+    end
+  
+    def line_item
+      line_item ||= Cart::LineItem
+        .find_or_create_by(line_item_id) do |line_item|
+          line_item.price = product.price
+        end
+    end
+  
     def product
       product ||= Product.find(product_id)
+    end
+
+    def line_item_id
+      {
+        cart: cart,
+        product: product
+      }
     end
   end  
 end
