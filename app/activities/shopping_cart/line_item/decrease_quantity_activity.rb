@@ -16,6 +16,7 @@ module ShoppingCart
     
       def call
         line_item.decrement!(:quantity)
+        line_item = update_discounts
         
         unless line_item.quantity.positive?
           remove_line_item
@@ -25,6 +26,14 @@ module ShoppingCart
       end
 
       private
+      def update_discounts
+        ShoppingCart::LineItem::UpdateDiscountsActivity.call(
+          cart: cart,
+          line_item: line_item,
+          previous_quantity: line_item.quantity.succ
+        )
+      end
+
       def remove_line_item
         ShoppingCart::RemoveLineItemActivity.call(
           cart: line_item.cart,

@@ -13,6 +13,11 @@ RSpec.describe ShoppingCart::AddLineItemActivity do
       it 'returns line item' do
         expect(subject.class).to be(Cart::LineItem)
       end
+  
+      it 'should update discounts' do
+        expect(ShoppingCart::LineItem::UpdateDiscountsActivity).to receive(:call)
+        subject
+      end
     end
 
     context 'when arguments are not provided' do
@@ -25,9 +30,19 @@ RSpec.describe ShoppingCart::AddLineItemActivity do
       subject do
         described_class.call(cart: cart, product_id: product.id)
       end
-  
+
       it 'adds line item to cart' do
         expect(subject.cart.line_items.count).to eq(1)
+      end
+
+      it 'should not increase quantity' do
+        expect(ShoppingCart::LineItem::IncreaseQuantityActivity)
+          .to_not receive(:call)
+        subject
+      end
+
+      it 'sets line item price' do
+        expect(subject.price).to eq(product.price)
       end
     end
 

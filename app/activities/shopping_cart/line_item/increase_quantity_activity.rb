@@ -16,6 +16,16 @@ module ShoppingCart
     
       def call
         line_item.increment!(:quantity)
+        update_discounts
+      end
+
+      private
+      def update_discounts
+        ShoppingCart::LineItem::UpdateDiscountsActivity.call(
+          cart: cart,
+          line_item: line_item,
+          previous_quantity: line_item.quantity.pred
+        )
       end
     end
   end

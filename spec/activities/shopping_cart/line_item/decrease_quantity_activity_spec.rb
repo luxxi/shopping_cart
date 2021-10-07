@@ -15,6 +15,13 @@ RSpec.describe ShoppingCart::LineItem::DecreaseQuantityActivity do
       it 'decrements line item quantity to 1' do
         expect{ subject }.to change{ line_item.quantity }.from(2).to(1)
       end
+
+      it 'should update discounts' do
+        expect(ShoppingCart::LineItem::UpdateDiscountsActivity)
+          .to receive(:call)
+          .and_return(line_item)
+        subject
+      end
     end
 
     context 'when line item quantity is 1' do
@@ -30,6 +37,13 @@ RSpec.describe ShoppingCart::LineItem::DecreaseQuantityActivity do
 
       it 'should remove line item' do
         expect(ShoppingCart::RemoveLineItemActivity).to receive(:call)
+        subject
+      end
+
+      it 'should update discounts' do
+        expect(ShoppingCart::LineItem::UpdateDiscountsActivity)
+          .to receive(:call)
+          .and_return(line_item)
         subject
       end
     end

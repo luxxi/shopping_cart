@@ -13,6 +13,11 @@ RSpec.describe ShoppingCart::LineItem::IncreaseQuantityActivity do
       it 'increments line item quantity' do
         expect{ subject }.to change{ line_item.quantity }.by(1)
       end
+
+      it 'should update discounts' do
+        expect(ShoppingCart::LineItem::UpdateDiscountsActivity).to receive(:call)
+        subject
+      end
     end
 
     context 'when arguments are not provided' do

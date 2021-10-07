@@ -14,8 +14,11 @@ module ShoppingCart
     end
   
     def call
-      return line_item if line_item.previously_new_record?
-      increase_quantity
+      if line_item.previously_new_record?
+        update_discounts
+      else
+        increase_quantity
+      end
     end
   
     private
@@ -23,6 +26,14 @@ module ShoppingCart
       ShoppingCart::LineItem::IncreaseQuantityActivity.call(
         cart: cart,
         line_item: line_item
+      )
+    end
+
+    def update_discounts
+      ShoppingCart::LineItem::UpdateDiscountsActivity.call(
+        cart: cart,
+        line_item: line_item,
+        previous_quantity: line_item.quantity.pred
       )
     end
   
