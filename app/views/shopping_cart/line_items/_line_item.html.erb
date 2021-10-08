@@ -1,12 +1,32 @@
 <%= tag.div id: dom_id(line_item) do %>
-  <%= line_item.product.name %>
-  <%= line_item.price %>
-  <%= line_item.total_quantity %>
-  <%= button_to '+', increase_shopping_cart_line_item_quantities_path(line_item),
-        method: :post %>
-  <%= button_to '-', decrease_shopping_cart_line_item_quantities_path(line_item),
-        method: :post %>
-  <%= "+ #{line_item.freebie_quantity}" if line_item.freebie_quantity.positive? %> 
-  <%= button_to 'Remove', shopping_cart_line_item_path(line_item),
-        method: :delete %>
+  <div class="p-3">
+    <div class="container w-32">
+      <div class="vertical-center">
+        <h1 class="font-light text-2xl"><%= line_item.product.name %></h1>
+        <%= currency(line_item.price) %>
+        <div class="h-10 w-32">
+          <div class="flex flex-row h-10 w-full rounded-lg">
+            <%= button_to increase_shopping_cart_line_item_quantities_path(line_item),
+                  method: :post,
+                  class: "bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-12 rounded-l cursor-pointer" do %>
+                    <span class="m-auto text-2xl font-thin">+</span>
+            <% end %>
+            <div class="w-16 bg-gray-300 flex justify-center items-center">
+              <div class="font-semibold text-md hover:text-black focus:text-black text-gray-700">
+                <%= line_item.total_quantity %>
+              </div>
+            </div>
+            <%= button_to decrease_shopping_cart_line_item_quantities_path(line_item),
+                  method: :post,
+                  class: "bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-12 rounded-r cursor-pointer" do %>
+                    <span class="m-auto text-2xl font-thin">-</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= "+ #{line_item.freebie_quantity}" if line_item.freebie_quantity.positive? %> 
+    <%= button_to 'Remove', shopping_cart_line_item_path(line_item),
+          method: :delete %>
+  </div>
 <% end %>

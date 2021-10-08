@@ -1,16 +1,36 @@
-<% @products.each do |product| %>
-  <div>
-    <h3><%= product.name %></h3>
-    <%= product.price %>
-    <%= button_to 'Add to Cart', shopping_cart_line_items_path, method: :post,
-          params: { product_id: product.id } %>
+<div class="grid grid-cols-2 gap-4">
+  <div class="flex flex-col justify-start items-center">
+    <% @products.each do |product| %>
+      <div class="bg-white w-60 h-30 rounded shadow-md flex card m-4">
+        <div class="w-full flex flex-col">
+          <div class="p-4 pb-0 flex-1">
+            <h3 class="font-light text-2xl mb-1">
+              <%= product.name %>
+            </h3>
+            <%= currency(product.price) %>
+          </div>
+          <div class="bg-grey-lighter p-3 flex items-center justify-between transition hover:bg-grey-light">
+            <%= button_to 'Add to Cart', shopping_cart_line_items_path,
+                  method: :post, params: { product_id: product.id },
+                  class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
-
-<%= turbo_frame_tag 'line_items' do %>
-  <%= render partial: 'shopping_cart/line_items/line_item', collection: @line_items %>
-<% end %>
-
-<%= turbo_frame_tag 'cart_total' do %>
-  <%= render partial: 'shopping_cart/total' %>
-<% end %>
+  <div>
+    <div class="w-96 bg-white rounded-lg shadow">
+      <%= turbo_frame_tag 'line_items' do %>
+        <div class="grid grid-cols-1 divide-y divide-gray-300">
+          <%= render partial: 'shopping_cart/line_items/line_item',
+                collection: @line_items %>
+        </div>
+      <% end %>
+      <div class="p-4">
+        <%= turbo_frame_tag 'cart_total' do %>
+          <%= render partial: 'shopping_cart/total' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
