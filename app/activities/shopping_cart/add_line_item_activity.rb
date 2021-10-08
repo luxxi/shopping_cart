@@ -1,6 +1,8 @@
 module ShoppingCart
   class AddLineItemActivity
     class << self
+      prepend ShoppingCartUpdatable
+
       def call(cart:, product_id:)
         new(cart: cart, product_id: product_id).call
       end

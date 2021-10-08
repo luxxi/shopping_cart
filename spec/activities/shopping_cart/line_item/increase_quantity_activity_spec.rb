@@ -18,6 +18,8 @@ RSpec.describe ShoppingCart::LineItem::IncreaseQuantityActivity do
         expect(ShoppingCart::LineItem::UpdateDiscountsActivity).to receive(:call)
         subject
       end
+      
+      it_behaves_like "shopping cart updatable"
     end
 
     context 'when arguments are not provided' do

@@ -1,6 +1,8 @@
 module ShoppingCart
   class RemoveLineItemActivity
     class << self
+      prepend ShoppingCartUpdatable
+
       def call(cart:, line_item_id:)
         new(cart: cart, line_item_id: line_item_id).call
       end

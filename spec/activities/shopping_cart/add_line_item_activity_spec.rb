@@ -10,6 +10,8 @@ RSpec.describe ShoppingCart::AddLineItemActivity do
         described_class.call(cart: cart, product_id: product.id)
       end
 
+      it_behaves_like "shopping cart updatable"
+
       it 'returns line item' do
         expect(subject.class).to be(Cart::LineItem)
       end

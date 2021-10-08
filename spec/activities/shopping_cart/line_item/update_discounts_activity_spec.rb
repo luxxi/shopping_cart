@@ -14,6 +14,8 @@ RSpec.describe ShoppingCart::LineItem::UpdateDiscountsActivity do
             previous_quantity: line_item.quantity.pred
           )
         end
+        
+        it_behaves_like "shopping cart updatable"
 
         context 'when offer buy one get one free applied to product' do
           before do

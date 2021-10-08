@@ -5,12 +5,16 @@ RSpec.describe ShoppingCart::LineItem::DecreaseQuantityActivity do
     let(:cart) { create(:cart) }
     let(:line_item) { create(:line_item, cart: cart) }
 
+    subject do
+      described_class.call(cart: cart, line_item: line_item)
+    end
+
+    context 'when arguments are provided' do      
+      it_behaves_like "shopping cart updatable"
+    end
+
     context 'when line item quantity is 2' do
       let(:line_item) { create(:line_item, cart: cart, quantity: 2) }
-
-      subject do
-        described_class.call(cart: cart, line_item: line_item)
-      end
 
       it 'decrements line item quantity to 1' do
         expect{ subject }.to change{ line_item.quantity }.from(2).to(1)
@@ -26,10 +30,6 @@ RSpec.describe ShoppingCart::LineItem::DecreaseQuantityActivity do
 
     context 'when line item quantity is 1' do
       let(:line_item) { create(:line_item, cart: cart, quantity: 1) }
-
-      subject do
-        described_class.call(cart: cart, line_item: line_item)
-      end
 
       it 'removes line item' do
         expect(subject.cart.line_items.count).to eq(0)
