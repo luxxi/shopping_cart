@@ -29,12 +29,20 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
       it 'should increment quantity' do
         expect { subject }.to change { line_item.quantity }.from(1).to(2)
       end
+
+      it 'should increment freebie quantity' do
+        expect { subject }.to change { line_item.freebie_quantity }.from(0).to(1)
+      end
     end
     context 'when quantity is 2' do
-      let(:line_item) { create(:line_item, quantity: 2) }
+      let(:line_item) { create(:line_item, quantity: 2, freebie_quantity: 1) }
 
       it 'should not increment quantity' do
         expect { subject }.to_not change { line_item.quantity }
+      end
+
+      it 'should not increment freebie quantity' do
+        expect { subject }.to_not change { line_item.freebie_quantity }
       end
     end
   end
@@ -47,17 +55,26 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
       )
     end
     context 'when quantity is 2' do
-      let(:line_item) { create(:line_item, quantity: 2) }
+      let(:line_item) { create(:line_item, quantity: 2, freebie_quantity: 1) }
 
       it 'should not decrement quantity' do
         expect { subject }.to_not change { line_item.quantity }
       end
+
+      it 'should not decrement freebie quantity' do
+        expect { subject }.to_not change { line_item.freebie_quantity }
+      end
+
     end
     context 'when quantity is 1' do
-      let(:line_item) { create(:line_item, quantity: 1) }
+      let(:line_item) { create(:line_item, quantity: 1, freebie_quantity: 1) }
 
       it 'should decrement quantity' do
         expect { subject }.to change { line_item.quantity }.from(1).to(0)
+      end
+
+      it 'should decrement freebie quantity' do
+        expect { subject }.to change { line_item.freebie_quantity }.from(1).to(0)
       end
     end
   end

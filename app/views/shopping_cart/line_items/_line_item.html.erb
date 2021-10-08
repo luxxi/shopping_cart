@@ -1,11 +1,12 @@
 <%= tag.div id: dom_id(line_item) do %>
   <%= line_item.product.name %>
   <%= line_item.price %>
-  <%= line_item.quantity %>
+  <%= line_item.total_quantity %>
   <%= button_to '+', increase_shopping_cart_line_item_quantities_path(line_item),
         method: :post %>
   <%= button_to '-', decrease_shopping_cart_line_item_quantities_path(line_item),
         method: :post %>
+  <%= "+ #{line_item.freebie_quantity}" if line_item.freebie_quantity.positive? %> 
   <%= button_to 'Remove', shopping_cart_line_item_path(line_item),
         method: :delete %>
 <% end %>

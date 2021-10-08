@@ -18,7 +18,7 @@ module ShoppingCart
 
     private
     def total
-      cart.line_items.sum("price * quantity")
+      cart.line_items.sum("price * (quantity - freebie_quantity)")
     end
   end  
 end
