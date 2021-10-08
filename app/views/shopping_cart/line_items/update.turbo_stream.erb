@@ -6,3 +6,6 @@
           locals: { line_item: @line_item } %>
   <% end %>
 <% end %>
+<%= turbo_stream.update "cart_total" do %>
+  <%= render partial: 'shopping_cart/total' %>
+<% end %>

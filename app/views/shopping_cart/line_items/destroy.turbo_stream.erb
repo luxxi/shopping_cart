@@ -1,1 +1,4 @@
 <%= turbo_stream.remove dom_id(@line_item) %>
+<%= turbo_stream.update "cart_total" do %>
+  <%= render partial: 'shopping_cart/total' %>
+<% end %>
