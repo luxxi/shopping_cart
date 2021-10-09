@@ -8,6 +8,7 @@ class Offer::BuyOneGetOneFree < ApplicationRecord
       l.increment(:quantity)
       l.increment(:freebie_quantity)
       l.save!
+      l.bargains.create(offer: offer)
     end
   end
 
@@ -18,6 +19,7 @@ class Offer::BuyOneGetOneFree < ApplicationRecord
       l.decrement(:quantity)
       l.decrement(:freebie_quantity)
       l.save!
+      l.bargains.find_by(offer: offer)&.destroy!
     end
   end
 

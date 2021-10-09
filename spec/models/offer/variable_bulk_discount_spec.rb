@@ -29,6 +29,10 @@ RSpec.describe Offer::VariableBulkDiscount, type: :model do
       it 'should not update price' do
         expect { subject }.to_not change { line_item.price }
       end
+
+      it 'should not add bargain relation' do
+        expect(subject.bargains.count).to eq(0)
+      end
     end
     context 'when quantity is 3' do
       let(:line_item) { create(:line_item, quantity: 3, price: 500.0) }
@@ -36,12 +40,24 @@ RSpec.describe Offer::VariableBulkDiscount, type: :model do
       it 'should update price' do
         expect { subject }.to change { line_item.price }.from(500.0).to(333.33)
       end
+
+      it 'should add bargain relation' do
+        expect(subject.bargains.count).to eq(1)
+      end
     end
-    context 'when quantity is 4' do
+    context 'when quantity is 4 and offer applied' do
       let(:line_item) { create(:line_item, quantity: 4, price: 500.0) }
+
+      before do
+        create(:bargain, offer: offer, line_item: line_item)
+      end
 
       it 'should not update price' do
         expect { subject }.to_not change { line_item.price }
+      end
+
+      it 'should not add another bargain relation' do
+        expect(subject.bargains.count).to eq(1)
       end
     end
   end
@@ -60,6 +76,10 @@ RSpec.describe Offer::VariableBulkDiscount, type: :model do
       it 'should not update price' do
         expect { subject }.to_not change { line_item.price }
       end
+
+      it 'should remove bargain relation' do
+        expect(subject.bargains.count).to eq(0)
+      end
     end
     context 'when quantity is 2' do
       let(:line_item) { create(:line_item, quantity: 2, price: 333.33) }
@@ -67,12 +87,24 @@ RSpec.describe Offer::VariableBulkDiscount, type: :model do
       it 'should update price' do
         expect { subject }.to change { line_item.price }.from(333.33).to(500.0)
       end
+
+      it 'should remove bargain relation' do
+        expect(subject.bargains.count).to eq(0)
+      end
     end
-    context 'when quantity is 3' do
+    context 'when quantity is 3 and offer applied' do
       let(:line_item) { create(:line_item, quantity: 3, price: 333.33) }
+
+      before do
+        create(:bargain, offer: offer, line_item: line_item)
+      end
 
       it 'should not update price' do
         expect { subject }.to_not change { line_item.price }
+      end
+
+      it 'should not remove bargain relation' do
+        expect(subject.bargains.count).to eq(1)
       end
     end
   end

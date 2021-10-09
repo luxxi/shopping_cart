@@ -33,9 +33,17 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
       it 'should increment freebie quantity' do
         expect { subject }.to change { line_item.freebie_quantity }.from(0).to(1)
       end
+
+      it 'should add bargain relation' do
+        expect(subject.bargains.count).to eq(1)
+      end
     end
-    context 'when quantity is 2' do
+    context 'when quantity is 2 and offer is applied' do
       let(:line_item) { create(:line_item, quantity: 2, freebie_quantity: 1) }
+
+      before do
+        create(:bargain, offer: offer, line_item: line_item)
+      end
 
       it 'should not increment quantity' do
         expect { subject }.to_not change { line_item.quantity }
@@ -43,6 +51,10 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
 
       it 'should not increment freebie quantity' do
         expect { subject }.to_not change { line_item.freebie_quantity }
+      end
+
+      it 'should not add another bargain relation' do
+        expect { subject }.to_not change { line_item.bargains }
       end
     end
   end
@@ -54,27 +66,39 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
         previous_quantity: line_item.quantity.succ
       )
     end
-    context 'when quantity is 2' do
-      let(:line_item) { create(:line_item, quantity: 2, freebie_quantity: 1) }
-
-      it 'should not decrement quantity' do
-        expect { subject }.to_not change { line_item.quantity }
+    context 'offer is applied' do
+      before do
+        create(:bargain, offer: offer, line_item: line_item)
       end
-
-      it 'should not decrement freebie quantity' do
-        expect { subject }.to_not change { line_item.freebie_quantity }
+      context 'when quantity is 2' do
+        let(:line_item) { create(:line_item, quantity: 2, freebie_quantity: 1) }
+  
+        it 'should not decrement quantity' do
+          expect { subject }.to_not change { line_item.quantity }
+        end
+  
+        it 'should not decrement freebie quantity' do
+          expect { subject }.to_not change { line_item.freebie_quantity }
+        end
+  
+        it 'should not remove bargain relation' do
+          expect { subject }.to_not change { line_item.bargains }
+        end
       end
-
-    end
-    context 'when quantity is 1' do
-      let(:line_item) { create(:line_item, quantity: 1, freebie_quantity: 1) }
-
-      it 'should decrement quantity' do
-        expect { subject }.to change { line_item.quantity }.from(1).to(0)
-      end
-
-      it 'should decrement freebie quantity' do
-        expect { subject }.to change { line_item.freebie_quantity }.from(1).to(0)
+      context 'when quantity is 1' do
+        let(:line_item) { create(:line_item, quantity: 1, freebie_quantity: 1) }
+  
+        it 'should decrement quantity' do
+          expect { subject }.to change { line_item.quantity }.from(1).to(0)
+        end
+  
+        it 'should decrement freebie quantity' do
+          expect { subject }.to change { line_item.freebie_quantity }.from(1).to(0)
+        end
+  
+        it 'should remove bargain relation' do
+          expect(subject.bargains.count).to eq(0)
+        end
       end
     end
   end

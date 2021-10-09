@@ -6,6 +6,7 @@ class Offer::FixedBulkDiscount < ApplicationRecord
 
     line_item.tap do |l|
       l.update(price: price)
+      l.bargains.create(offer: offer)
     end
   end
 
@@ -14,6 +15,7 @@ class Offer::FixedBulkDiscount < ApplicationRecord
 
     line_item.tap do |l|
       l.update(price: product.price)
+      l.bargains.find_by(offer: offer)&.destroy!
     end
   end
 
