@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_180255) do
+ActiveRecord::Schema.define(version: 2021_10_09_063947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "bargains", force: :cascade do |t|
+    t.bigint "line_item_id", null: false
+    t.bigint "offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["line_item_id"], name: "index_bargains_on_line_item_id"
+    t.index ["offer_id"], name: "index_bargains_on_offer_id"
+  end
 
   create_table "cart_line_items", force: :cascade do |t|
     t.uuid "cart_id", null: false
@@ -67,6 +76,8 @@ ActiveRecord::Schema.define(version: 2021_10_08_180255) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "bargains", "cart_line_items", column: "line_item_id"
+  add_foreign_key "bargains", "offers"
   add_foreign_key "cart_line_items", "carts"
   add_foreign_key "cart_line_items", "products"
   add_foreign_key "offers", "products"
