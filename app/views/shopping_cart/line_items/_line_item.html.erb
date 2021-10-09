@@ -25,7 +25,10 @@
         </div>
       </div>
     </div>
-    <%= "+ #{line_item.freebie_quantity}" if line_item.freebie_quantity.positive? %> 
+    <%= "+ #{line_item.freebie_quantity}" if line_item.freebie_quantity.positive? %>
+    <% line_item.offers.each do |offer| %>
+      <%= offer.name %>
+    <% end %>
     <%= button_to 'Remove', shopping_cart_line_item_path(line_item),
           method: :delete %>
   </div>
