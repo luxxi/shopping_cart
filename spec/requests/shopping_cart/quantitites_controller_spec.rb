@@ -18,5 +18,11 @@ RSpec.describe "ShoppingCart::QuantitiesController", type: :request do
         xhr: true
       expect(response).to have_http_status(:success)
     end
+
+    it "returns http success" do
+      post "/shopping_cart/line_items/#{line_item.id}/quantities/decrease",
+        xhr: true
+      expect(response).to have_http_status(:success)
+    end
   end
 end

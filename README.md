@@ -54,6 +54,6 @@ I extracted business logic into a pattern named Activities. Activity is a plain 
 `ShoppingCartUpdatable` updates shopping cart total when cart activity happens  
 
 ### Testing
-The codebase has 90 tests. I have followed TDD for the most part. The majority of tests are written for the activities to confirm business logic is working as expected. Other are unit tests for models and few requests tests to verify endpoints responses. It would be nice to have a few integrations tests to exercise a user's interaction with the interface.
+The codebase has 92 tests. I have followed TDD for the most part. The majority of tests are written for the activities to confirm business logic is working as expected. Other are unit tests for models and few requests tests to verify endpoints responses. It would be nice to have a few integrations tests to exercise a user's interaction with the interface.
 
 The application is deployed on Heroku: [tech-assignment-shopping-cart.herokuapp.com](https://tech-assignment-shopping-cart.herokuapp.com/)
