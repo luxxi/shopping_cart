@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ShoppingCart::LineItem::UpdateDiscountsActivity do
+RSpec.describe ShoppingCart::LineItem::UpdateBargainsActivity do
   describe '.call' do
     let(:cart) { create(:cart) }
     let(:line_item) { create(:line_item, cart: cart) }

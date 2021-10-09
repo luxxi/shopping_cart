@@ -29,7 +29,7 @@ module ShoppingCart
 
       private
       def update_discounts
-        ShoppingCart::LineItem::UpdateDiscountsActivity.call(
+        ShoppingCart::LineItem::UpdateBargainsActivity.call(
           cart: cart,
           line_item: line_item,
           previous_quantity: line_item.quantity.succ

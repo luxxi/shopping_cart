@@ -1,6 +1,6 @@
 module ShoppingCart
   module LineItem
-    class UpdateDiscountsActivity
+    class UpdateBargainsActivity
       class << self
         prepend ShoppingCartUpdatable
 

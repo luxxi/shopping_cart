@@ -17,7 +17,7 @@ RSpec.describe ShoppingCart::AddLineItemActivity do
       end
   
       it 'should update discounts' do
-        expect(ShoppingCart::LineItem::UpdateDiscountsActivity).to receive(:call)
+        expect(ShoppingCart::LineItem::UpdateBargainsActivity).to receive(:call)
         subject
       end
     end
