@@ -1,6 +1,10 @@
 class Offer::BuyOneGetOneFree < ApplicationRecord
   include Offerable
 
+  def name
+    "Buy One Get One Free"
+  end
+
   def apply(line_item:, previous_quantity:)
     return line_item unless eligible(line_item, previous_quantity)
 

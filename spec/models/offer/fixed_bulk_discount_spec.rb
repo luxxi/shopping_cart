@@ -6,6 +6,7 @@ RSpec.describe Offer::FixedBulkDiscount, type: :model do
   let(:fixed_bulk_discount_offer) { build(:offer, :fixed_bulk_discount) }
 
   it 'expect FixedBulkDiscount offer responds to required methods' do
+    expect(fixed_bulk_discount_offer).to respond_to(:name)
     expect(fixed_bulk_discount_offer).to respond_to(:apply)
     expect(fixed_bulk_discount_offer).to respond_to(:remove)
   end

@@ -6,6 +6,7 @@ RSpec.describe Offer::VariableBulkDiscount, type: :model do
   let(:variable_bulk_discount_offer) { build(:offer, :variable_bulk_discount) }
 
   it 'expect VariableBulkDiscount offer responds to required methods' do
+    expect(variable_bulk_discount_offer).to respond_to(:name)
     expect(variable_bulk_discount_offer).to respond_to(:apply)
     expect(variable_bulk_discount_offer).to respond_to(:remove)
   end

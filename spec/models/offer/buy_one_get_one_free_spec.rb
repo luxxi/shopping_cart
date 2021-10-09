@@ -6,6 +6,7 @@ RSpec.describe Offer::BuyOneGetOneFree, type: :model do
   let(:buy_one_get_one_free_offer) { build(:offer, :buy_one_get_one_free) }
 
   it 'expect BuyOneGetOneFree offer responds to required methods' do
+    expect(buy_one_get_one_free_offer).to respond_to(:name)
     expect(buy_one_get_one_free_offer).to respond_to(:apply)
     expect(buy_one_get_one_free_offer).to respond_to(:remove)
   end

@@ -1,6 +1,10 @@
 class Offer::VariableBulkDiscount < ApplicationRecord
   include Offerable
 
+  def name
+    "Bulk Discount"
+  end
+
   def apply(line_item:, previous_quantity:)
     return line_item unless eligible(line_item, previous_quantity)
 
