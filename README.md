@@ -46,12 +46,12 @@ I modeled the domain with flexibility for changing offers in mind. The behavior 
 I extracted business logic into a pattern named Activities. Activity is a plain old Ruby object that performs business logic. It is similar to a more famous Service object pattern, but I like to keep Services reserved for integrations with external systems. In addition, the isolation of business logic into smaller units provides an easier way for writing tests.
 
 `ShoppingCart::AddLineItemActivity` adds line item to cart and updates bargains. When a line item is already in a cart, it will increase the quantity  
-`ShoppingCart::RemoveLineItemActivity` removes line item from cart
-`ShoppingCart::CalculateTotalActivity` recalculate total amount for cart
-`ShoppingCart::LineItem::IncreaseQuantityActivity` increases quantity of line item and updates bargains
-`ShoppingCart::LineItem::DecreaseQuantityActivity` decreases the quantity of a line item and updates bargains
-`ShoppingCart::LineItem::UpdateBargainsActivity` updates bargains for a line item with offers that are associated with the product
-`ShoppingCartUpdatable` updates shopping cart total when cart activity happens
+`ShoppingCart::RemoveLineItemActivity` removes line item from cart  
+`ShoppingCart::CalculateTotalActivity` recalculate total amount for cart  
+`ShoppingCart::LineItem::IncreaseQuantityActivity` increases the quantity of a line item and updates bargains    
+`ShoppingCart::LineItem::DecreaseQuantityActivity` decreases the quantity of a line item and updates bargains    
+`ShoppingCart::LineItem::UpdateBargainsActivity` updates bargains for a line item with offers that are associated with the product  
+`ShoppingCartUpdatable` updates shopping cart total when cart activity happens  
 
 ### Testing
 The codebase has 90 tests. I have followed TDD for the most part. The majority of tests are written for the activities to confirm business logic is working as expected. Other are unit tests for models and few requests tests to verify endpoints responses. It would be nice to have a few integrations tests to exercise a user's interaction with the interface.
